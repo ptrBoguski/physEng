@@ -48,3 +48,51 @@ TEST(SphericRigidbodyTest, UpdateUpdatesPosition) {
     EXPECT_NEAR(expectedPosition(i), actualPosition(i), 1e-5);
   }
 }
+
+#include "../../include/rigidbody/Rigidbody.h"
+
+class TestRigidbody : public Rigidbody {
+public:
+  TestRigidbody(double mass) {
+    this->mass = mass;
+    velocity = boost::numeric::ublas::vector<double>(3);
+    velocity.clear();
+    position = boost::numeric::ublas::vector<double>(3);
+    position.clear();
+  }
+};
+
+class RigidbodyTest : public ::testing::Test {
+protected:
+  TestRigidbody *rigidbody;
+
+  void SetUp() override { rigidbody = new TestRigidbody(2.0); }
+
+  void TearDown() override { delete rigidbody; }
+};
+
+TEST_F(RigidbodyTest, ApplyForceUpdatesVelocity) {
+  boost::numeric::ublas::vector<double> force(3);
+  force(0) = 1.0;
+  force(1) = 0.0;
+  force(2) = 0.0;
+  rigidbody->applyForce(force);
+  EXPECT_DOUBLE_EQ(rigidbody->getVelocity()(0), 0.5);
+}
+
+TEST_F(RigidbodyTest, UpdateChangesPosition) {
+  boost::numeric::ublas::vector<double> force(3);
+  force(0) = 1.0;
+  force(1) = 0.0;
+  force(2) = 0.0;
+  std::cout << "Initial Position: " << rigidbody->getPosition()(0) << std::endl;
+  rigidbody->applyForce(force);
+  rigidbody->update(5.0);
+  std::cout << "Updated Position: " << rigidbody->getPosition()(0) << std::endl;
+  EXPECT_DOUBLE_EQ(rigidbody->getPosition()(0), 2.5);
+}
+TEST_F(RigidbodyTest, GetAndSetMass) {
+  EXPECT_DOUBLE_EQ(rigidbody->getMass(), 2.0);
+  rigidbody->setMass(3.0);
+  EXPECT_DOUBLE_EQ(rigidbody->getMass(), 3.0);
+}

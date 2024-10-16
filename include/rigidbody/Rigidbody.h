@@ -11,7 +11,7 @@ public:
     velocity += force / mass;
   };
   void update(double deltaTime) override{
-    position += velocity * deltaTime;
+    position += (velocity * deltaTime);
   };
 
   double getMass() const override {
@@ -24,7 +24,7 @@ public:
     return velocity;
   };
   boost::numeric::ublas::vector<double> getPosition() const override {
-    return velocity;
+    return position;
   };
 
 protected:
