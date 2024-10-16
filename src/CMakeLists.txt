@@ -6,7 +6,7 @@ project(PhysEngLib)
 
 # Add source files for the PhysEngLib library
 add_library(PhysEngLib
-    physics/rigidbody/Rigidbody.cpp
+    physics/rigidbody/SphericRigidbody.cpp
     renderer/OpenGLRenderer.cpp
     # Add other source files here
 )

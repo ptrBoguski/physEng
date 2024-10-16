@@ -1,9 +1,9 @@
-#include "../../include/rigidbody/Rigidbody.h"
+#include "../../include/rigidbody/SphericRigidbody.h"
 #include <boost/numeric/ublas/vector.hpp>
 #include <gtest/gtest.h>
 
-TEST(RigidbodyTest, ApplyForceUpdatesVelocity) {
-  Rigidbody rb;
+TEST(SphericRigidbodyTest, ApplyForceUpdatesVelocity) {
+  SphericRigidbody rb(10.0);
   boost::numeric::ublas::vector<double> initialVelocity(3);
   initialVelocity.clear();
 
@@ -23,8 +23,8 @@ TEST(RigidbodyTest, ApplyForceUpdatesVelocity) {
     EXPECT_NEAR(expectedVelocity(i), actualVelocity(i), 1e-5);
   }
 }
-TEST(RigidbodyTest, UpdateUpdatesPosition) {
-  Rigidbody rb;
+TEST(SphericRigidbodyTest, UpdateUpdatesPosition) {
+  SphericRigidbody rb(10.0);
 
   // Apply Force
   boost::numeric::ublas::vector<double> force(3);
