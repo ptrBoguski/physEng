@@ -1,0 +1,24 @@
+#include "../include/rigidbody/Rigidbody.h"
+#include "./renderer/OpenGLRenderer.cpp"
+#include "boost/numeric/ublas/vector.hpp"
+
+int main() {
+  OpenGLRenderer renderer;
+  renderer.initialize();
+
+  Rigidbody rigidbody; // Initialize at origin
+  boost::numeric::ublas::vector<double> force(3);
+  force(0) = .00003; // Example force along x-axis
+  while (!glfwWindowShouldClose(renderer.window)) {
+    renderer.render(rigidbody);
+    rigidbody.update(1.0);
+    rigidbody.applyForce(force);
+    std::cout<<rigidbody.getVelocity()(0)<<std::endl;
+
+    // Poll for and process events
+    glfwPollEvents();
+  }
+
+  renderer.cleanup();
+  return 0;
+}

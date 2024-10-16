@@ -1,19 +1,20 @@
 #ifndef RIGIDBODY_H
 #define RIGIDBODY_H
 
-#include <boost/numeric/ublas/vector.hpp>
+#include "IRigidbody.h"
 
-class Rigidbody {
+class Rigidbody : public IRigidbody {
 public:
   Rigidbody();
   ~Rigidbody();
 
-  void applyForce(const boost::numeric::ublas::vector<double>& force);
-  void update(double deltaTime);
+  void applyForce(const boost::numeric::ublas::vector<double>& force) override;
+  void update(double deltaTime) override;
 
-  double getMass() const;
-  void setMass(double mass);
-  boost::numeric::ublas::vector<double> getVelocity() const;
+  double getMass() const override;
+  void setMass(double mass) override;
+  boost::numeric::ublas::vector<double> getVelocity() const override;
+  boost::numeric::ublas::vector<double> getPosition() const override;
 
 private:
   class RigidbodyImpl;
