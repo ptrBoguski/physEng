@@ -5,7 +5,7 @@
 
 class SphericRigidbody : public Rigidbody {
 public:
-  SphericRigidbody(double radius);
+  SphericRigidbody(double radius, double mass);
   virtual ~SphericRigidbody();
 
   double getRadius() const;

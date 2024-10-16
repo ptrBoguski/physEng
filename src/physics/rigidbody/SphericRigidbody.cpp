@@ -1,8 +1,7 @@
 #include "../../../include/rigidbody/SphericRigidbody.h"
 
-SphericRigidbody::SphericRigidbody(double radius) : radius(radius) {
-  mass = 1.0;
-
+SphericRigidbody::SphericRigidbody(double radius, double mass) : radius(radius){
+  this->mass = mass;
   velocity = boost::numeric::ublas::vector<double>(3);
   position = boost::numeric::ublas::vector<double>(3);
 

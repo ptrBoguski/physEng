@@ -3,7 +3,7 @@
 #include <gtest/gtest.h>
 
 TEST(SphericRigidbodyTest, ApplyForceUpdatesVelocity) {
-  SphericRigidbody rb(10.0);
+  SphericRigidbody rb(10.0, 1.0);
   boost::numeric::ublas::vector<double> initialVelocity(3);
   initialVelocity.clear();
 
@@ -24,7 +24,7 @@ TEST(SphericRigidbodyTest, ApplyForceUpdatesVelocity) {
   }
 }
 TEST(SphericRigidbodyTest, UpdateUpdatesPosition) {
-  SphericRigidbody rb(10.0);
+  SphericRigidbody rb(10.0, 1.0);
 
   // Apply Force
   boost::numeric::ublas::vector<double> force(3);
