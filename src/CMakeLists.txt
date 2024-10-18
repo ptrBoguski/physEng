@@ -23,7 +23,7 @@ find_package(GLEW REQUIRED)
 find_package(glfw3 REQUIRED)
 
 # Add the main executable
-add_executable(PhysEngMain main.cpp renderer/OpenGLRenderer.cpp)
+add_executable(PhysEngMain sandbox.cpp renderer/OpenGLRenderer.cpp)
 
 # Link the executable with OpenGL, GLFW, and GLEW
 target_link_libraries(PhysEngMain PhysEngLib OpenGL::GL GLEW::GLEW glfw)
