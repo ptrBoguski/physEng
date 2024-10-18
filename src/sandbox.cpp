@@ -2,6 +2,8 @@
 #include "./renderer/OpenGLRenderer.cpp"
 #include "boost/numeric/ublas/vector.hpp"
 
+// This is a playground file for testing and experimentation.
+
 int main() {
   OpenGLRenderer renderer;
   renderer.initialize();
