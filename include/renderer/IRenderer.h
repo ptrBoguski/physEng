@@ -1,5 +1,5 @@
 #pragma once
-#include "../rigidbody/Rigidbody.h"
+#include "../rigidbody/SphericRigidbody.h"
 
 class IRenderer {
 public:
@@ -7,6 +7,7 @@ public:
 
     virtual void initialize() = 0;
     virtual void clearScreen() = 0;
+    virtual void render(const SphericRigidbody &rigidbody) = 0;
     virtual void render(const Rigidbody &rigidbody) = 0;
     virtual void swapBuffers() = 0;
     virtual void pollEvents() = 0;

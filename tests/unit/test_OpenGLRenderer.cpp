@@ -4,8 +4,10 @@
 #include <GLFW/glfw3.h>
 #include "../../src/renderer/OpenGLRenderer.cpp"
 
-class MockRigidbody : public Rigidbody {
+class MockRigidbody : public SphericRigidbody {
 public:
+  MockRigidbody(double r, double m) : SphericRigidbody(r,m){
+  }
     MOCK_METHOD(boost::numeric::ublas::vector<double>, getPosition, (), (const, override));
 };
 
@@ -34,7 +36,7 @@ TEST_F(OpenGLRendererTest, Cleanup) {
 }
 
 TEST_F(OpenGLRendererTest, RenderCallRigidbody) {
-    MockRigidbody mockRigidbody;
+    MockRigidbody mockRigidbody(10.0, 10.0);
     boost::numeric::ublas::vector<double> position(2);
     position(0) = 0.0;
     position(1) = 0.0;

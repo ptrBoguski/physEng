@@ -1,5 +1,6 @@
 #include "../../include/renderer/IRenderer.h"
 #include "../../include/rigidbody/Rigidbody.h"
+#include "../../include/rigidbody/SphericRigidbody.h"
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <cmath>
@@ -15,7 +16,7 @@ public:
       return;
     }
 
-    window = glfwCreateWindow(800, 600, "PhysEng Renderer", NULL, NULL);
+    window = glfwCreateWindow(800, 800, "PhysEng Renderer", NULL, NULL);
     if (!window) {
       std::cerr << "Failed to create GLFW window" << std::endl;
       glfwTerminate();
@@ -29,18 +30,24 @@ public:
       return;
     }
 
-    glViewport(0, 0, 800, 600);
+    glViewport(0, 0, 800, 800);
   }
 
-  void render(const Rigidbody &rigidbody) override {
-    glClear(GL_COLOR_BUFFER_BIT);
+
+  void render(const Rigidbody &rigidbody) override {}
+  // TODO fix rendering scale
+  void render(const SphericRigidbody &rigidbody) override {
 
     // Get the position of the Rigidbody
     auto position = rigidbody.getPosition();
 
     // Define circle parameters
-    float radius = 0.05f;  // Adjust the radius as needed
+    float radius = rigidbody.getRadius();  // Adjust the radius as needed
     int numSegments = 100; // Number of segments for the circle
+    if(color)
+      glColor3f(1.0f, 0.0f, 0.0f);
+    else
+      glColor3f(1.0f, 1.0f, 1.0f);  // Green color for default rendering
 
     // Render a circle
     glBegin(GL_TRIANGLE_FAN);
@@ -55,7 +62,9 @@ public:
     }
     glEnd();
 
-    glfwSwapBuffers(window);
+  }
+  void set_color(bool red){
+    this->color = red;
   }
 
   void clearScreen() override {
@@ -68,8 +77,12 @@ public:
     glfwTerminate();
   }
 
-  // TODO 
-  void swapBuffers() override {};
+  // TODO implement those functions 
+  void swapBuffers() override {
+    glfwSwapBuffers(window);
+  };
   void pollEvents() override {};
   bool shouldClose() override { return false; };
+protected: 
+  bool color = false;
 };

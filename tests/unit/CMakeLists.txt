@@ -33,9 +33,13 @@ include_directories(${Boost_INCLUDE_DIRS})
 
 # Add the Rigidbody test executable
 add_executable(test_Rigidbody test_Rigidbody.cpp)
+add_executable(test_SphericRigidbody test_SphericRigidbody.cpp)
+add_executable(test_SphereCollisionDetection test_SphereCollisionDetection.cpp)
 
 # Link GTest, GMock, and GTest Main to the Rigidbody test
 target_link_libraries(test_Rigidbody PRIVATE PhysEngLib GTest::GTest GMock::GMock GTest::Main)
+target_link_libraries(test_SphericRigidbody PRIVATE PhysEngLib GTest::GTest GMock::GMock GTest::Main)
+target_link_libraries(test_SphereCollisionDetection PRIVATE PhysEngLib GTest::GTest GMock::GMock GTest::Main)
 
 # Find OpenGL, GLEW, and GLFW
 find_package(OpenGL REQUIRED)
@@ -72,4 +76,6 @@ enable_testing()
 
 # Add tests
 add_test(NAME TestRigidbody COMMAND test_Rigidbody)
+add_test(NAME TestSphericRigidbody COMMAND test_SphericRigidbody)
 add_test(NAME TestOpenGLRenderer COMMAND test_OpenGLRenderer)
+add_test(NAME TestSphereCollisionDetection COMMAND test_SphereCollisionDetection)
