@@ -35,7 +35,7 @@ public:
 
 
   void render(const Rigidbody &rigidbody) override {}
-  // TODO fix rendering scale
+  // TODO: fix rendering scale
   void render(const SphericRigidbody &rigidbody) override {
 
     // Get the position of the Rigidbody
@@ -77,7 +77,7 @@ public:
     glfwTerminate();
   }
 
-  // TODO implement those functions 
+  // TODO: implement those functions 
   void swapBuffers() override {
     glfwSwapBuffers(window);
   };

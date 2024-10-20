@@ -40,7 +40,7 @@ public:
   double getRestitution() const override {
     return restitution;
   }
-  // TODO fix for inf mass
+  // TODO: fix for inf mass
   void resolveCollision(IRigidbody& other) override {
     // Calculate the normal vector between two rigidbodies
     boost::numeric::ublas::vector<double> normal = other.getPosition() - this->getPosition();

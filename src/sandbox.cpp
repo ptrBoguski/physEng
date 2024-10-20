@@ -4,7 +4,7 @@
 #include "boost/numeric/ublas/vector.hpp"
 #include <chrono>
 #include <iostream>
-#include <limits>
+/*#include <limits>*/
 #include <random>
 
 // This is a playground file for testing and experimentation.
@@ -52,6 +52,13 @@ int main() {
 
   // Add four large balls with infinite mass to cover screen edges
   double largeRadius = 1000000.0; // Large enough to cover the edges
+  // BUG: The collision resolution logic currently does not support using
+  // actual infinite mass values (e.g., std::numeric_limits<double>::infinity()).
+  // As a workaround, we use a very large finite value (1e100) to simulate
+  // an "infinite" mass. This large value is intended to ensure that these
+  // rigid bodies (e.g., screen edge boundaries) are not significantly affected
+  // by collisions with other objects, effectively behaving as if they have
+  // infinite mass.
   double infMass = 1e100;
   /*double infMass = std::numeric_limits<double>::infinity();*/
 
