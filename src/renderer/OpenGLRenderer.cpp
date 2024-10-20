@@ -42,7 +42,7 @@ public:
     auto position = rigidbody.getPosition();
 
     // Define circle parameters
-    float radius = rigidbody.getRadius();  // Adjust the radius as needed
+    float radius = rigidbody.getRadius();   
     int numSegments = 100; // Number of segments for the circle
     if(color)
       glColor3f(1.0f, 0.0f, 0.0f);
