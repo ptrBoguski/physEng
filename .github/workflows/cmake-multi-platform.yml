@@ -38,11 +38,21 @@ jobs:
 
     - name: Install dependencies on Ubuntu
       if: matrix.os == 'ubuntu-latest'
-      run: sudo apt-get update && sudo apt-get install -y libboost-all-dev libgl1-mesa-dev
+      run: sudo apt-get update && sudo apt-get install -y libboost-all-dev libgl1-mesa-dev libglew-dev
 
     - name: Install dependencies on Windows
       if: matrix.os == 'windows-latest'
       run: choco install boost-msvc-14.2
+
+    - name: Set up vcpkg
+      if: matrix.os == 'windows-latest'
+      run: |
+        git clone https://github.com/microsoft/vcpkg.git
+        .\vcpkg\bootstrap-vcpkg.bat
+        .\vcpkg\vcpkg.exe install glew:x64-windows
+    - name: Add vcpkg to CMake toolchain
+      if: matrix.os == 'windows-latest'
+      run: echo "set(CMAKE_TOOLCHAIN_FILE ${GITHUB_WORKSPACE}/vcpkg/scripts/buildsystems/vcpkg.cmake)" >> $GITHUB_ENV
 
     - name: Set up CMake
       uses: lukka/get-cmake@latest
