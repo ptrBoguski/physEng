@@ -37,7 +37,15 @@ jobs:
     - uses: actions/checkout@v4
 
     - name: Set up CMake
-      uses: lukka/get-cmake@latest
+      uses: actions/setup-cmake@v2
+
+    - name: Install dependencies on Ubuntu
+      if: matrix.os == 'ubuntu-latest'
+      run: sudo apt-get update && sudo apt-get install -y libboost-all-dev
+
+    - name: Install dependencies on Windows
+      if: matrix.os == 'windows-latest'
+      run: choco install boost-msvc-14.2
 
     - name: Configure CMake
       run: cmake -B build -DCMAKE_CXX_COMPILER=${{ matrix.cpp_compiler }} -DCMAKE_C_COMPILER=${{ matrix.c_compiler }} -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} -S .
