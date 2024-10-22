@@ -38,7 +38,7 @@ jobs:
 
     - name: Install dependencies on Ubuntu
       if: matrix.os == 'ubuntu-latest'
-      run: sudo apt-get update && sudo apt-get install -y libboost-all-dev
+      run: sudo apt-get update && sudo apt-get install -y libboost-all-dev libgl1-mesa-dev
 
     - name: Install dependencies on Windows
       if: matrix.os == 'windows-latest'
