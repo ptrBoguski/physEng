@@ -4,26 +4,15 @@ cmake_minimum_required(VERSION 3.10)
 # Set the project name
 project(UnitTests)
 
-# Set the module path to include the cmake directory
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake")
+# Include FetchContent module
+include(FetchContent)
 
-# Manually specify the GTest library using a custom path
-add_library(GTest::GTest UNKNOWN IMPORTED)
-set_target_properties(GTest::GTest PROPERTIES
-  IMPORTED_LOCATION "/home/dns/Dev/googletest/build/lib/libgtest.a"
+# Fetch GoogleTest
+FetchContent_Declare(
+  googletest
+  URL https://github.com/google/googletest/archive/refs/tags/release-1.11.0.zip
 )
-
-# Manually specify the GMock library using a custom path
-add_library(GMock::GMock UNKNOWN IMPORTED)
-set_target_properties(GMock::GMock PROPERTIES
-  IMPORTED_LOCATION "${CMAKE_SOURCE_DIR}/../googletest/build/lib/libgmock.a"
-)
-
-# Manually specify the GTest Main library using a custom path
-add_library(GTest::Main UNKNOWN IMPORTED)
-set_target_properties(GTest::Main PROPERTIES
-  IMPORTED_LOCATION "${CMAKE_SOURCE_DIR}/../googletest/build/lib/libgtest_main.a"
-)
+FetchContent_MakeAvailable(googletest)
 
 # Find Boost
 find_package(Boost REQUIRED)
@@ -37,9 +26,9 @@ add_executable(test_SphericRigidbody test_SphericRigidbody.cpp)
 add_executable(test_SphereCollisionDetection test_SphereCollisionDetection.cpp)
 
 # Link GTest, GMock, and GTest Main to the Rigidbody test
-target_link_libraries(test_Rigidbody PRIVATE PhysEngLib GTest::GTest GMock::GMock GTest::Main)
-target_link_libraries(test_SphericRigidbody PRIVATE PhysEngLib GTest::GTest GMock::GMock GTest::Main)
-target_link_libraries(test_SphereCollisionDetection PRIVATE PhysEngLib GTest::GTest GMock::GMock GTest::Main)
+target_link_libraries(test_Rigidbody PRIVATE PhysEngLib GTest::gtest GTest::gmock GTest::gtest_main)
+target_link_libraries(test_SphericRigidbody PRIVATE PhysEngLib GTest::gtest GTest::gmock GTest::gtest_main)
+target_link_libraries(test_SphereCollisionDetection PRIVATE PhysEngLib GTest::gtest GTest::gmock GTest::gtest_main)
 
 # Find OpenGL, GLEW, and GLFW
 find_package(OpenGL REQUIRED)
@@ -66,9 +55,9 @@ target_link_libraries(test_OpenGLRenderer PRIVATE
     ${OPENGL_LIBRARIES} 
     GLEW::GLEW 
     glfw
-    GTest::GTest
-    GMock::GMock
-    GTest::Main
+    GTest::gtest
+    GTest::gmock
+    GTest::gtest_main
 )
 
 # Enable testing
@@ -77,5 +66,5 @@ enable_testing()
 # Add tests
 add_test(NAME TestRigidbody COMMAND test_Rigidbody)
 add_test(NAME TestSphericRigidbody COMMAND test_SphericRigidbody)
-add_test(NAME TestOpenGLRenderer COMMAND test_OpenGLRenderer)
 add_test(NAME TestSphereCollisionDetection COMMAND test_SphereCollisionDetection)
+add_test(NAME TestOpenGLRenderer COMMAND test_OpenGLRenderer)
