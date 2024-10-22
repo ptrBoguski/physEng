@@ -73,13 +73,12 @@ public:
     other.applyImpulse(impulse);
   }
 
-  
 protected:
   double mass;
   boost::numeric::ublas::vector<double> velocity;
   boost::numeric::ublas::vector<double> position;
   boost::numeric::ublas::vector<double> accumulatedForce;
-  double restitution = 1;
+  double restitution = 1.0;
 };
 
 #endif // RIGIDBODY_H

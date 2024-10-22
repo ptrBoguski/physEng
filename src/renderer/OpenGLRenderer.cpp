@@ -47,7 +47,7 @@ public:
     if(color)
       glColor3f(1.0f, 0.0f, 0.0f);
     else
-      glColor3f(1.0f, 1.0f, 1.0f);  // Green color for default rendering
+      glColor3f(1.0f, 1.0f, 1.0f);  // White color for default rendering
 
     // Render a circle
     glBegin(GL_TRIANGLE_FAN);

@@ -10,6 +10,8 @@ public:
     velocity.clear();
     position = boost::numeric::ublas::vector<double>(3);
     position.clear();
+    accumulatedForce =  boost::numeric::ublas::vector<double>(3);
+    accumulatedForce.clear();
   }
 };
 

@@ -41,17 +41,17 @@ int main() {
   OpenGLRenderer renderer;
   renderer.initialize();
 
-  const int numRigidbodies = 200; // Number of random rigid bodies
+  const int numRigidbodies = 100; // Number of random rigid bodies
   std::vector<SphericRigidbody> rigidbodies;
   std::vector<boost::numeric::ublas::vector<double>> velocities;
 
   std::random_device rd;
   std::mt19937 gen(rd());
   std::uniform_real_distribution<> posDist(-1.0, 1.0);
-  std::uniform_real_distribution<> velDist(-0.6, 0.60);
+  std::uniform_real_distribution<> velDist(-1, 1);
 
   // Add four large balls with infinite mass to cover screen edges
-  double largeRadius = 1000000.0; // Large enough to cover the edges
+  double largeRadius = 100000.0; // Large enough to cover the edges
   // BUG: The collision resolution logic currently does not support using
   // actual infinite mass values (e.g., std::numeric_limits<double>::infinity()).
   // As a workaround, we use a very large finite value (1e100) to simulate
@@ -103,11 +103,13 @@ int main() {
     boost::numeric::ublas::vector<double> position(3);
     position(0) = posDist(gen);
     position(1) = posDist(gen);
+    position(2) = 0;
     rigidbody.setPosition(position);
 
     boost::numeric::ublas::vector<double> velocity(3);
     velocity(0) = velDist(gen);
     velocity(1) = velDist(gen);
+    velocity(2) = 0;
     rigidbody.applyImpulse(velocity);
 
     rigidbodies.push_back(rigidbody);
@@ -136,8 +138,7 @@ int main() {
           rigidbodies[i].resolveCollision(rigidbodies[j]);
           collision[i] = true;
           collision[j] = true;
-        } else {
-        }
+        }  
       }
     }
 
@@ -150,6 +151,9 @@ int main() {
 
     for (size_t i = 4; i < rigidbodies.size(); ++i) {
       rigidbodies[i].update(deltaTime);
+      if(rigidbodies[i].getPosition()(2) != 0 ){
+        std::cout<<i<<": "<<rigidbodies[i].getPosition()<<std::endl;
+      }
     }
     std::cout << 1 / deltaTime << std::endl;
 

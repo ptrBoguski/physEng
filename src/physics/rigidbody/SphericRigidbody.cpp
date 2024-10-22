@@ -1,4 +1,5 @@
 #include "../../../include/rigidbody/SphericRigidbody.h"
+#include "../../utils/VectorUtils.h"
 
 SphericRigidbody::SphericRigidbody(double radius, double mass)
     : radius(radius) {
