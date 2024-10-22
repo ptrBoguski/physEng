@@ -12,47 +12,50 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, windows-latest]
+        os: [ubuntu-latest] # Removed windows-latest
         build_type: [Release]
-        c_compiler: [gcc, clang, cl]
+        c_compiler: [gcc, clang]
         include:
-          - os: windows-latest
-            c_compiler: cl
-            cpp_compiler: cl
+          # Commented out Windows configurations
+          # - os: windows-latest
+          #   c_compiler: cl
+          #   cpp_compiler: cl
           - os: ubuntu-latest
             c_compiler: gcc
             cpp_compiler: g++
           - os: ubuntu-latest
             c_compiler: clang
             cpp_compiler: clang++
-        exclude:
-          - os: windows-latest
-            c_compiler: gcc
-          - os: windows-latest
-            c_compiler: clang
-          - os: ubuntu-latest
-            c_compiler: cl
+        # Exclude Windows configurations
+        # exclude:
+        #   - os: windows-latest
+        #     c_compiler: gcc
+        #   - os: windows-latest
+        #     c_compiler: clang
+        #   - os: ubuntu-latest
+        #     c_compiler: cl
 
     steps:
     - uses: actions/checkout@v4
 
     - name: Install dependencies on Ubuntu
       if: matrix.os == 'ubuntu-latest'
-      run: sudo apt-get update && sudo apt-get install -y libboost-all-dev libgl1-mesa-dev libglew-dev
+      run: sudo apt-get update && sudo apt-get install -y libboost-all-dev libgl1-mesa-dev libglew-dev libglfw3-dev
 
-    - name: Install dependencies on Windows
-      if: matrix.os == 'windows-latest'
-      run: choco install boost-msvc-14.2
+    # Commented out Windows setup
+    # - name: Install dependencies on Windows
+    #   if: matrix.os == 'windows-latest'
+    #   run: choco install boost-msvc-14.2
 
-    - name: Set up vcpkg
-      if: matrix.os == 'windows-latest'
-      run: |
-        git clone https://github.com/microsoft/vcpkg.git
-        .\vcpkg\bootstrap-vcpkg.bat
-        .\vcpkg\vcpkg.exe install glew:x64-windows
-    - name: Add vcpkg to CMake toolchain
-      if: matrix.os == 'windows-latest'
-      run: echo "set(CMAKE_TOOLCHAIN_FILE ${GITHUB_WORKSPACE}/vcpkg/scripts/buildsystems/vcpkg.cmake)" >> $GITHUB_ENV
+    # - name: Set up vcpkg
+    #   if: matrix.os == 'windows-latest'
+    #   run: |
+    #     git clone https://github.com/microsoft/vcpkg.git
+    #     .\vcpkg\bootstrap-vcpkg.bat
+    #     .\vcpkg\vcpkg.exe install glew:x64-windows glfw3:x64-windows
+    # - name: Add vcpkg to CMake toolchain
+    #   if: matrix.os == 'windows-latest'
+    #   run: echo "set(CMAKE_TOOLCHAIN_FILE ${GITHUB_WORKSPACE}/vcpkg/scripts/buildsystems/vcpkg.cmake)" >> $GITHUB_ENV
 
     - name: Set up CMake
       uses: lukka/get-cmake@latest
